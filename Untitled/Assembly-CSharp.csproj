@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Assets\Elf\Script\Elf_Manager.cs" />
+     <Compile Include="Assets\Assets\Elf\Script\Manager.cs" />
      <Compile Include="Assets\Scripts\TestPaul\TestPaul01.cs" />
      <Compile Include="Assets\Scripts\UI_Script\Menu.cs" />
      <Compile Include="Assets\Scripts\UI_Script\test2.cs" />

@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4616946, g: 0.51241565, b: 0.58993244, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -168,11 +168,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 349880297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.6, y: -6.5, z: -13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.1729026, y: 0.9999997, z: 4.7951145}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &797038638
 GameObject:
@@ -261,6 +261,108 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &916658653
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.2450061
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.0204924e-17
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.522838
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+  m_IsPrefabParent: 0
+--- !u!1 &1446173062 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100206, guid: e9c5981fbaf261f4f976333c279b3ffc, type: 3}
+  m_PrefabInternal: {fileID: 916658653}
+--- !u!95 &1446173063
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1446173062}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1446173065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1446173062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6624db58761758a4d946029df6ddf771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Elf: {fileID: 1446173062}
+  aniname: []
+  ElfChar: []
+  ElfWand: []
+  Wand: []
+  ElfPet: []
+  Pet: []
+  iElf: 0
+  iWand: 0
+  iPet: 0
+  iani: 0
+--- !u!114 &1446173066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1446173062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e7902be9e42b3f4fa709357bba70078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraObj: {fileID: 797038638}
+  camera: {fileID: 797038642}
+  left: 0
+  right: 0
+  cameraIn: 0
+  cameraOut: 0
 --- !u!1 &1907807812
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,5 +424,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
