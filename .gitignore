@@ -220,6 +220,7 @@ pip-log.txt
 # =============== #
 Temp/
 Library/
+Source/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
