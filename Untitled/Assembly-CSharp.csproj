@@ -46,10 +46,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\TestPaul\TestPaul01.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
      <Compile Include="Assets\Scripts\UI_Script\Menu.cs" />
      <Compile Include="Assets\Scripts\UI_Script\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\UI_Script\test2.cs" />
+     <Compile Include="Assets\Scripts\enemymode.cs" />
+     <Compile Include="Assets\Scripts\playermode.cs" />
      <Compile Include="Assets\Scripts\test_script.cs" />
      <Compile Include="Assets\Scripts\yoonatest.cs" />
      <Compile Include="Assets\Source\Houses\Medieval_House\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
