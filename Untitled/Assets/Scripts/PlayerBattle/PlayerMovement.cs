@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         Turning(h,v);
 
         // Animate the player.
-        //Animating(h, v);
+        Animating(h, v);
     }
 
     void Move(float h, float v)
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         movement.Set(h, 0f, v);
 
         // Normalise the movement vector and make it proportional to the speed per second.
-        movement = movement.normalized * speed * Time.deltaTime;
+        movement = movement.normalized * speed * Time.fixedDeltaTime;
 
         // Move the player to it's current position plus the movement.
         playerRigidbody.MovePosition(transform.position + movement);
