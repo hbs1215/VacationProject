@@ -18,18 +18,23 @@ public class playermode : MonoBehaviour {
   
     ENEMYSTATE enemyState = ENEMYSTATE.IDLE;
     public Slider healthSlider;
+    
     int healthPoint = 2;
     public int playerhealth = 100;
     public int enemypower = 10;
     public int playerpower = 20;
     bool isDead=false;
     bool walk=false;
+    public bool animationeffect;
+    public float animationplay;
     float stateTime = 0.0f;
     float animationtime = 0.0f;
+    float deadtime = 0.0f;
     [Header("Idle")]
     public float idleStateMaxTime = 2.0f;
 
     Animator anim;
+    Animation anima;
     Transform target = null;
     Transform character = null;
     CharacterController characterController = null;
@@ -47,12 +52,15 @@ public class playermode : MonoBehaviour {
     Vector3 escape;
     void Awake()
     {
-        InitDinoSaurs();
+        healthPoint = playerhealth;
         target = GameObject.FindGameObjectWithTag("Enemy").transform;
         character = GameObject.FindGameObjectWithTag("character").transform;
-        
+        enemyState = ENEMYSTATE.IDLE;
         characterController = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
+        if (animationeffect)
+            anima = GetComponent<Animation>();
+        else
+            anim = GetComponent<Animator>();
         enemystate = target.GetComponent<enemymode>();
     }
 
@@ -67,7 +75,7 @@ public class playermode : MonoBehaviour {
     {
         healthPoint = playerhealth;
 
-        enemyState = ENEMYSTATE.IDLE;
+        
         //anim["slime_idle"].speed = 1.5f;
         //anim.CrossFade("slime_idle");
     }
@@ -91,9 +99,9 @@ public class playermode : MonoBehaviour {
             target = GameObject.FindGameObjectWithTag("Enemy").transform;
         if(target!=null)
             enemystate = target.GetComponent<enemymode>();
-
-        anim.SetBool("walking", walk);
-        if (healthPoint <= 0)
+        if(!animationeffect)
+             anim.SetBool("walking", walk);
+        if (healthPoint <= 0&&enemyState!= ENEMYSTATE.DEAD)
             enemyState = ENEMYSTATE.DEAD;
         switch (enemyState)
         {
@@ -101,6 +109,8 @@ public class playermode : MonoBehaviour {
                 {
                     stateTime += Time.deltaTime;
                     walk = false;
+                    if (animationeffect)
+                        anima.CrossFade("aelf_pet_idle");
                     if (stateTime > idleStateMaxTime)
                     {
                         stateTime = 0.0f;
@@ -112,11 +122,14 @@ public class playermode : MonoBehaviour {
             case ENEMYSTATE.MOVE:
                 {
                     walk = true;
+                    if (animationeffect)
+                        anima.CrossFade("aelf_move");
                     float distance = (target.position - transform.position).magnitude;
-                    Debug.Log(distance);
+
                     if (distance < attackRange)
                     {
                         enemyState = ENEMYSTATE.ATTACK;
+                        stateTime = attackStateMaxTime;
                     }
                     else
                     {
@@ -137,18 +150,29 @@ public class playermode : MonoBehaviour {
                 break;
             case ENEMYSTATE.ATTACK:
                 {
+                    
                     stateTime += Time.deltaTime;
                     dir = target.position - transform.position;
+                    dir.y = 0.0f;
+                    dir.Normalize();
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
 
                     if (stateTime > attackStateMaxTime)
                     {
                         if(animationtime == 0)
-                            anim.SetTrigger("Isattack_tiger");
-                        animationtime += Time.deltaTime;
-                        if (animationtime>0.6f)
                         {
-                           
+                            if (animationeffect)
+                                anima.CrossFade("aelf_hit");
+                            else
+                                anim.SetTrigger("Isattack_tiger");
+
+                        }
+                            
+                        animationtime += Time.deltaTime;
+                        if (animationtime>animationplay)
+                        {
+                            if (animationeffect)
+                                anima.CrossFade("aelf_pet_idle");
                             enemystate.DamageByEnemy(playerpower);
                             animationtime = 0f;
                             stateTime = 0.0f;
@@ -170,9 +194,21 @@ public class playermode : MonoBehaviour {
                 break;
             case ENEMYSTATE.DEAD:
                 {
+                    if (deadtime == 0)
+                    {
+                        if (!animationeffect)                        
+                             anim.SetTrigger("Die");
+                    }
+                    deadtime += Time.deltaTime;
                     //Destroy(gameObject);
-                    anim.SetTrigger("Die");
-                    StartCoroutine("DeadProcess");
+                    if (animationeffect)
+                    {
+                        transform.Rotate(0f, 0f, -1f);
+                        transform.Translate(-Vector3.up * 8 * Time.deltaTime);
+
+                    }
+                    if (deadtime > 0.6f)
+                        Destroy(gameObject);
                     enemyState = ENEMYSTATE.NONE;
                     
                 }
@@ -180,6 +216,8 @@ public class playermode : MonoBehaviour {
             case ENEMYSTATE.ESCAPE:
                 {
                     walk = true;
+                    if (animationeffect)
+                        anima.CrossFade("aelf_move");
                     escape = character.position;
                     escape.z -= 2;
 

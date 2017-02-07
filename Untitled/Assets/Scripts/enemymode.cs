@@ -20,11 +20,12 @@ public class enemymode : MonoBehaviour {
     int healthPoint = 100;
     public int enemyhealth = 100;
     public int enemypower = 10;
-    public int playerpower = 20;
+
     bool isDead=false;
     public bool animationeffect;
     float stateTime = 0.0f;
     float animtime = 0.0f;
+    float deadtime = 0.0f;
     [Header("Idle")]
     public float idleStateMaxTime = 2.0f;
 
@@ -47,7 +48,7 @@ public class enemymode : MonoBehaviour {
     void Awake()
     {
         InitDinoSaurs();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform; 
         characterController = GetComponent<CharacterController>();
         if(animationeffect==false)
             anim = GetComponent<Animator>();
@@ -93,6 +94,7 @@ public class enemymode : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //if(target!=null)
         Vector3 dir = target.position - transform.position;
         if (Input.GetKey(KeyCode.Z))
             playerattack = true;
@@ -150,6 +152,8 @@ public class enemymode : MonoBehaviour {
                 break;
             case ENEMYSTATE.ATTACK:
                 {
+                    dir.y = 0.0f;
+                    dir.Normalize();
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
                     walk = false;
                     if (playerattack)
@@ -205,14 +209,19 @@ public class enemymode : MonoBehaviour {
             case ENEMYSTATE.DEAD:
                 {
                     //Destroy(gameObject);
-                    if (animationeffect == false)
-                        anim.SetTrigger("Isdead_bat");
-                    else
-                        anima.CrossFade("Death");
-                    StartCoroutine("DeadProcess");
-                    
-                    enemyState = ENEMYSTATE.NONE;
 
+                    if (animationeffect == false && deadtime == 0f)
+                    {
+                        anim.SetTrigger("Isdead_bat");
+                        Debug.Log(deadtime);
+                    }
+
+                    else if (animationeffect == true && deadtime == 0f)
+                        anima.CrossFade("Death");
+                    deadtime += Time.deltaTime;
+                    if (deadtime > 2f)
+                        gameObject.SetActive(false);
+                    
 
                 }
                 break;
@@ -227,7 +236,7 @@ public class enemymode : MonoBehaviour {
 
         healthPoint = healthPoint - power;
         healthSlider.value = healthPoint;
-        Debug.Log(healthPoint);
+       // Debug.Log(healthPoint);
 
         //cameraShake.PlayCameraShake();
 

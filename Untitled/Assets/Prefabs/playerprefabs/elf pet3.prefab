@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 114385021277568712}
   m_Layer: 0
   m_Name: elf pet3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -886,9 +886,9 @@ MonoBehaviour:
   playerhealth: 100
   enemypower: 10
   playerpower: 20
-  animationplaytime: 0
-  idleStateMaxTime: 2
   animationeffect: 1
+  animationplay: 0.6
+  idleStateMaxTime: 2
   moveSpeed: 5
   rotationSpeed: 10
   attackRange: 5
