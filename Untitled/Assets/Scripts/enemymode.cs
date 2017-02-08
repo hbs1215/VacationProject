@@ -32,6 +32,7 @@ public class enemymode : MonoBehaviour {
     Animator anim;
     Animation anima;
     Transform target = null;
+    Transform enemycharacter = null;
     CharacterController characterController = null;
 
     [Header("move")]
@@ -44,11 +45,12 @@ public class enemymode : MonoBehaviour {
 
     playermode playerstate = null;
     bool walk=false;
-
+    Vector3 dir;
     void Awake()
     {
         InitDinoSaurs();
-        target = GameObject.FindGameObjectWithTag("Player").transform; 
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        enemycharacter = transform;
         characterController = GetComponent<CharacterController>();
         if(animationeffect==false)
             anim = GetComponent<Animator>();
@@ -62,7 +64,7 @@ public class enemymode : MonoBehaviour {
         
  //   }
 
-
+       
     void OnEnable()
     {
         InitDinoSaurs();
@@ -94,8 +96,15 @@ public class enemymode : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //if(target!=null)
-        Vector3 dir = target.position - transform.position;
+        Debug.Log(transform);
+        if (target != null)
+            dir = target.position - enemycharacter.position;
+        else 
+        {
+             dir = Vector3.zero;
+            
+        }
+           
         if (Input.GetKey(KeyCode.Z))
             playerattack = true;
         else if (Input.GetKey(KeyCode.X))
@@ -103,7 +112,8 @@ public class enemymode : MonoBehaviour {
 
         if (healthPoint <= 0)
             enemyState = ENEMYSTATE.DEAD;
-
+        if(playerstate.playerhealth<=0)
+            enemyState = ENEMYSTATE.DAMAGE;
 
         switch (enemyState)
         {
@@ -128,7 +138,9 @@ public class enemymode : MonoBehaviour {
                         anim.SetBool("Move_bat", walk);
                     else
                         anima.CrossFade("Walk");
-                    float distance = (target.position - transform.position).magnitude;
+                    float distance = 0f ;
+                    if(enemyState==ENEMYSTATE.MOVE)
+                        distance= (target.position - enemycharacter.position).magnitude;
                    
                     if (distance < attackRange)
                     {
@@ -146,7 +158,7 @@ public class enemymode : MonoBehaviour {
 
                         
                     }
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
+                    enemycharacter.rotation = Quaternion.Lerp(enemycharacter.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
 
                 }
                 break;
@@ -154,7 +166,7 @@ public class enemymode : MonoBehaviour {
                 {
                     dir.y = 0.0f;
                     dir.Normalize();
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
+                    enemycharacter.rotation = Quaternion.Lerp(enemycharacter.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
                     walk = false;
                     if (playerattack)
                     {
@@ -180,31 +192,24 @@ public class enemymode : MonoBehaviour {
                         }
                     }
 
-                    float distance = (target.position - transform.position).magnitude;
+                    float distance = (target.position - enemycharacter.position).magnitude;
                     if (distance > attackRange)
                     {
                         enemyState = ENEMYSTATE.IDLE;
                         
                     }
+                    else if(playerstate.playerhealth<=0)
+                        enemyState = ENEMYSTATE.DAMAGE;
                 }
                 break;
             case ENEMYSTATE.DAMAGE:
-                /*{
-
-                    healthPoint -= playerpower;
-                    healthSlider.value = healthPoint;
-                    
-
-                    AnimationState animState = anim.PlayQueued("slime_idle", QueueMode.PlayNow);
-                    animState.speed = 3.0f;
-                    anim.PlayQueued("slime_idle", QueueMode.CompleteOthers);
-
-                    stateTime = 0.0f;
-                    enemyState = ENEMYSTATE.IDLE;
-
-                    if (healthPoint <= 0)
-                        enemyState = ENEMYSTATE.DEAD;
-                }*/
+                {
+                    walk =false;
+                    if (animationeffect == false)
+                        anim.SetBool("Move_bat", walk);
+                    else
+                        anima.CrossFade("Idle");
+                }
                 break;
             case ENEMYSTATE.DEAD:
                 {

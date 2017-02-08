@@ -145,6 +145,7 @@
     <Compile Include="Assets\Source\ToonCharacterPack\Script\Manager.cs" />
     <Compile Include="Assets\Source\ToonCharacterPack\Script\Witch_Manager.cs" />
     <Compile Include="Assets\Source\asset_2\BagIdea\GUIScript.cs" />
+    <Compile Include="Assets\slidermove.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Source\Houses\Baker House\Readme.txt" />

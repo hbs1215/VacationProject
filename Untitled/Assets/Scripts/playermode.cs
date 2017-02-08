@@ -95,9 +95,14 @@ public class playermode : MonoBehaviour {
             enemyState = ENEMYSTATE.ESCAPE;
 
         Vector3 dir = target.position - transform.position;
-        if (GameObject.FindGameObjectWithTag("Enemy")!= null)
+        if (GameObject.FindGameObjectWithTag("Enemy") != null)
+        {
             target = GameObject.FindGameObjectWithTag("Enemy").transform;
-        if(target!=null)
+            
+        }
+        else
+            enemyState = ENEMYSTATE.KILL;
+        if (target!=null)
             enemystate = target.GetComponent<enemymode>();
         if(!animationeffect)
              anim.SetBool("walking", walk);
@@ -182,7 +187,7 @@ public class playermode : MonoBehaviour {
                     }
                    
                     float distance = (target.position - transform.position).magnitude;
-                    if (distance > attackRange)
+                    if (distance > attackRange||target==null)
                     {
                         enemyState = ENEMYSTATE.IDLE;
                     }
@@ -190,6 +195,12 @@ public class playermode : MonoBehaviour {
                 }
                 break;
             case ENEMYSTATE.KILL:
+                {
+                    if (animationeffect == false)
+                        walk = false;
+                    else
+                        anima.CrossFade("aelf_pet_idle");
+                }
                
                 break;
             case ENEMYSTATE.DEAD:
